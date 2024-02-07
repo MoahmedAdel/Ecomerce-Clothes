@@ -53,7 +53,7 @@ if (isset($_POST["submit"])) {
             }
         }
         //validation method for input need Regex and must be unique such (email and phone)
-        public function SpecificInputValidation($pattern,$table)
+        public function SpecificInputValidation($pattern, $table)
         {
             $specificInputValidation = new Validation($this->name, $this->value);
             $spacificInputRequired = $specificInputValidation->Required();
@@ -64,18 +64,87 @@ if (isset($_POST["submit"])) {
                     $spacificInputUnique = $specificInputValidation->Unique($table);
                     if (empty($spacificInputUnique)) {
                         $_SESSION["values"]["$this->name"] = $this->value;
-                    }
-                    else{
+                    } else {
                         $_SESSION["errors"]["$this->name"]["unique"] = $spacificInputUnique;
                     }
                 } else {
                     $_SESSION["errors"]["$this->name"]["regex"] = $spacificInputRegex;
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"]= $spacificInputRequired;
+                $_SESSION["errors"]["$this->name"]["required"] = $spacificInputRequired;
             }
         }
-
+        //validation method for password 
+        public function PasswordValidation($pattern)
+        {
+            $passwordValidation = new Validation($this->name, $this->value);
+            $passwordRequired = $passwordValidation->Required();
+            if (empty($passwordRequired)) {
+                $passwordValidation->Filter();
+                if (strlen($this->value) > 6 && strlen($this->value) < 13) {
+                    $passwordRegex = $passwordValidation->Regex($pattern);
+                    if (empty($passwordRegex)) {
+                        $_SESSION["values"]["$this->name"] = $this->value;
+                    } else {
+                        $_SESSION["errors"]["$this->name"]["regex"] = $passwordRegex;
+                    }
+                } else {
+                    $_SESSION["errors"]["$this->name"]["length"] = "password length 6-13";
+                }
+            } else {
+                $_SESSION["errors"]["$this->name"]["required"] = $passwordRequired;
+            }
+        }
+        //validation method for Confirm Password 
+        public function ConfirmPasswordValidation($confirmPassword)
+        {
+            $confirmPasswordValidation = new Validation($this->name, $this->value);
+            $confirmPasswordRequired = $confirmPasswordValidation->Required();
+            if (empty($confirmPasswordRequired)) {
+                $confirmPasswordValidation->Filter();
+                $confirmPasswordConfirmed = $confirmPasswordValidation->Confirmed($confirmPassword);
+                if (empty($confirmPasswordConfirmed)) {
+                    $_SESSION["values"]["$this->name"] = $this->value;
+                } else {
+                    $_SESSION["errors"]["$this->name"]["confirm"] = $confirmPasswordConfirmed;
+                }
+            } else {
+                $_SESSION["errors"]["$this->name"]["required"] = $confirmPasswordRequired;
+            }
+        }
+        //validation method for date
+        public function DateValidation($pattern)
+        {
+            $dateValidation = new Validation($this->name, $this->value);
+            $dateRequired = $dateValidation->Required();
+            if (empty($dateRequired)) {
+                $dateValidation->Filter();
+                $dateRegex = $dateValidation->Regex($pattern);
+                if (empty($dateRegex)) {
+                    $_SESSION["values"]["$this->name"] = $this->value;
+                } else {
+                    $_SESSION["errors"]["$this->name"]["regex"] = $dateRegex;
+                }
+            } else {
+                $_SESSION["errors"]["$this->name"]["required"] = $dateRequired;
+            }
+        }
+        //validation method for gender
+        public function GenderValidation($pattern)
+        {
+            $genderValidation = new Validation($this->name, $this->value);
+            $genderRequired = $genderValidation->Required();
+            if (empty($genderRequired)) {
+                $genderRegex = $genderValidation->Regex($pattern);
+                if (empty($genderRegex)) {
+                    $_SESSION["values"]["$this->name"] = $this->value;
+                } else {
+                    $_SESSION["errors"]["$this->name"]["regex"] = $genderRegex;
+                }
+            } else {
+                $_SESSION["errors"]["$this->name"]["required"] = $genderRequired;
+            }
+        }
     }
     //object for Validation NameValidation method
     $fristNameObject = new RegisterRequest("first_name", $_POST["first_name"]);
@@ -90,9 +159,28 @@ if (isset($_POST["submit"])) {
 
     //object for Validation SpecificInputValidation method (email)
     $emailObject = new RegisterRequest("email", $_POST["email"]);
-    $pattern = "/^\w+[\w\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/";
+    $patternEmail = "/^\w+[\w\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/";
     $table = "users";
-    $emailObject->SpecificInputValidation($pattern,$table);
+    $emailObject->SpecificInputValidation($patternEmail, $table);
+
+    //object for Validation Password method
+    $passwordObject = new RegisterRequest("password", $_POST["password"]);
+    $patternPassword = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{4,8}$/";
+    $passwordObject->PasswordValidation($patternPassword);
+
+    //object for Validation ConfirmPassword method 
+    $confirmPasswordObject = new RegisterRequest("confirm_password", $_POST["confirm_password"]);
+    $confirmPasswordObject->ConfirmPasswordValidation($_POST["password"]);
+
+    //object for Validation DateValidation method
+    $dateObject = new RegisterRequest("date_of_birth", $_POST["date_of_birth"]);
+    $patternDate = "/^\d{4}-\d{2}-\d{2}$/";
+    $dateObject->DateValidation($patternDate);
+
+    //object for Validation GenderValidation method
+    $genderObject = new RegisterRequest("gender", $_POST["gender"]);
+    $patternGender = "/^[m|f]$/";
+    $genderObject->GenderValidation($patternGender);
 }
 if (empty($_SESSION["errors"])) {
     var_dump($_POST);

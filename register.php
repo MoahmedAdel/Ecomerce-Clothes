@@ -21,7 +21,7 @@ include_once "layouts/Breadcrumb.php";
         <div class="col-12 col-lg-12 col-xl-12 px-5 pb-5">
             <form action="app/requests/RegisterRequest.php" method="post" class="mt-5">
                 <div class="row ">
-                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 align-self-center w-100">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 align-self-start w-100">
                         <!-- form register section -->
                         <div class="">
                             <label for="firstname" class="form-label font-weight-bold">First Name</label>
@@ -87,60 +87,87 @@ include_once "layouts/Breadcrumb.php";
                                 </p>
                             </div>
                         </div>
-                        <div class="">
-                            <label for="phone" class="form-label font-weight-bold">Phone</label>
-                            <input type="text" id="phone" name="phone"
-                                class="form-control text-indent shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3"
-                                placeholder="011 1497 9112">
-                            <div class="error" style="margin-left:13px">
-                                <p class="text-danger mb-0 p-1"> </p>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 align-self-start w-100">
-                        <div class="mb-3">
+                        <div class="">
                             <label for="password" class="form-label font-weight-bold">Password</label>
                             <div class="d-flex position-relative">
                                 <input type="password" id="password" name="password"
-                                    class="form-control text-indent auth__password shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3">
+                                    class="form-control text-indent auth__password shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3"
+                                    placeholder=""
+                                    value="<?= (isset($_SESSION["values"]["password"])) ? $_SESSION["values"]["password"] : "" ?>">
                                 <span class="password__icon text-primary fs-4 fw-bold bi bi-eye-slash"></span>
                             </div>
                             <div class="error" style="margin-left:13px">
-                                <p class="text-danger mb-0 p-1"> </p>
+                                <p class="text-danger mb-0 p-1">
+                                    <?php if (isset($_SESSION["errors"]["password"])) {
+                                        foreach ($_SESSION['errors']['password'] as $error) {
+                                            echo $error;
+                                        }
+                                    } ?>
+                                </p>
                             </div>
                             <label for="confirm-password" class="form-label font-weight-bold">Confirm Password</label>
                             <div class="d-flex position-relative">
                                 <input type="confirm-password" id="password" name="confirm_password"
-                                    class="form-control text-indent auth__password shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3">
+                                    class="form-control text-indent auth__password shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3"
+                                    placeholder=""
+                                    value="<?= (isset($_SESSION["values"]["confirm_password"])) ? $_SESSION["values"]["confirm_password"] : "" ?>">
                                 <span class="password__icon text-primary fs-4 fw-bold bi bi-eye-slash"></span>
                             </div>
                             <div class="error" style="margin-left:13px">
-                                <p class="text-danger mb-0 p-1"> </p>
+                                <p class="text-danger mb-0 p-1">
+                                    <?php if (isset($_SESSION["errors"]["confirm_password"])) {
+                                        foreach ($_SESSION['errors']['confirm_password'] as $error) {
+                                            echo $error;
+                                        }
+                                    } ?>
+                                </p>
                             </div>
                             <div>
                                 <label for="dateofbirth" class="form-label font-weight-bold">Date Of Birth</label>
-                                <input type="date" name="date_of_birth" id="dateofbirth"
-                                    class="form-control text-indent shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3">
+                                <input type="date" name="date_of_birth" id="date_of_birth"
+                                    class="form-control text-indent shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3"
+                                    value="<?= (isset($_SESSION["values"]["date_of_birth"])) ? $_SESSION["values"]["date_of_birth"] : "" ?>">
                                 <div class="error" style="margin-left:13px">
-                                    <p class="text-danger mb-0 p-1"> </p>
+                                    <p class="text-danger mb-0 p-1">
+                                        <?php if (isset($_SESSION["errors"]["date_of_birth"])) {
+                                            foreach ($_SESSION['errors']['date_of_birth'] as $error) {
+                                                echo $error;
+                                            }
+                                        } ?>
+                                    </p>
                                 </div>
                             </div>
-                            <label for="male" class="form-label mt-3 font-weight-bold">Gender</label>
-                            <div class="ml-3">
+                            <label for="male" class="form-label mt-2 font-weight-bold">Gender</label>
+                            <div class="ml-3 mb-md-3">
                                 <div class="form-check ">
-                                    <input class="form-check-input" type="radio" name="gender" id="male" checked>
+                                    <input class="form-check-input" type="radio" name="gender" value="m" id="male" <?php if (isset($_SESSION["values"]["gender"])) {
+                                        if ($_SESSION["values"]["gender"] == "m")
+                                            echo "checked";
+                                    } ?>>
                                     <label class="male m-0" for="flexRadioDefault1">
                                         Male
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gender" id="female">
-                                    <label class="female" for="flexRadioDefault2">
+                                    <input class="form-check-input" type="radio" name="gender" value="f" id="female"
+                                        <?php if (isset($_SESSION["values"]["gender"])) {
+                                            if ($_SESSION["values"]["gender"] == "f")
+                                                echo "checked";
+                                        } ?>>
+                                    <label class="female m-0" for="flexRadioDefault2">
                                         Female
                                     </label>
                                 </div>
-                                <div class="error" style="margin-left:13px">
-                                    <p class="text-danger mb-0 p-1"> </p>
+                                <div class="error" style="">
+                                    <p class="text-danger mb-0 ">
+                                        <?php if (isset($_SESSION["errors"]["gender"])) {
+                                            foreach ($_SESSION['errors']['gender'] as $error) {
+                                                echo $error;
+                                            }
+                                        } ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +176,7 @@ include_once "layouts/Breadcrumb.php";
                 <div class="row">
                     <div class="col col-md-12  ">
                         <button name="submit" type="submit"
-                            class="btn btn-outline-dark btn-lg rounded mt-sm-0 mt-md-4 mt-lg-4 mt-xl-4 w-100 col-sm-12 col-md-3 col-lg-2 col-xl-2"
+                            class="btn btn-outline-dark btn-lg rounded mt-sm-0 w-100 col-sm-12 col-md-3 col-lg-2 col-xl-2"
                             style="border-radius: 1.25rem!important;">Sign
                             Up</button>
                     </div>
