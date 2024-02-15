@@ -1,10 +1,12 @@
 <?php
 include_once "Validation.php";
+include_once "../models/User.php";
+include_once "../services/mail.php";
 session_start();
 
 if (isset($_POST["submit"])) {
     //validation for frist name
-    class RegisterRequest
+    class RegisterRequest extends Validation
     {
         private $name;
         private $value;
@@ -16,133 +18,138 @@ if (isset($_POST["submit"])) {
         //validation method for frist and last name
         public function NameValidation()
         {
-            $nameValidation = new Validation($this->name, $this->value);
-            $nameRequired = $nameValidation->Required();
+            parent::__construct($this->name, $this->value);
+            $nameRequired = $this->Required();
             if (empty($nameRequired)) {
-                $nameValidation->Filter();
-                $nameIsString = $nameValidation->IsString();
+                $this->Filter();
+                $nameIsString = $this->IsString();
                 if (empty($nameIsString)) {
-                    $_SESSION["values"]["$this->name"] = $this->value;
+                    $_SESSION["values"]["register"]["$this->name"] = $this->value;
                 } else {
-                    $_SESSION["errors"]["$this->name"]["isString"] = $nameIsString;
+                    $_SESSION["errors"]["register"]["$this->name"]["isString"] = $nameIsString;
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"] = $nameRequired;
+                $_SESSION["errors"]["register"]["$this->name"]["required"] = $nameRequired;
             }
         }
         //validation method for user_name | different to method NameValidation -> must be uniqe()
         public function UserNameValidation($table)
         {
-            $userNameValidation = new Validation($this->name, $this->value);
-            $userNameRequired = $userNameValidation->Required();
+            parent::__construct($this->name, $this->value);
+            $userNameRequired = $this->Required();
             if (empty($userNameRequired)) {
-                $userNameValidation->Filter();
-                $userNameIsString = $userNameValidation->IsString();
+                $this->Filter();
+                $userNameIsString = $this->IsString();
                 if (empty($userNameIsString)) {
-                    $userNameUnique = $userNameValidation->Unique($table);
+                    $userNameUnique = $this->Unique($table);
                     if (empty($userNameUnique)) {
-                        $_SESSION["values"]["$this->name"] = $this->name;
+                        $_SESSION["values"]["register"]["$this->name"] = $this->value;
                     } else {
-                        $_SESSION["errors"]["$this->name"]["unique"] = $userNameUnique;
+                        $_SESSION["errors"]["register"]["$this->name"]["unique"] = $userNameUnique;
                     }
                 } else {
-                    $_SESSION["errors"]["$this->name"]["isString"] = $userNameIsString;
+                    $_SESSION["errors"]["register"]["$this->name"]["isString"] = $userNameIsString;
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"] = $userNameRequired;
+                $_SESSION["errors"]["register"]["$this->name"]["required"] = $userNameRequired;
             }
         }
         //validation method for input need Regex and must be unique such (email and phone)
         public function SpecificInputValidation($pattern, $table)
         {
-            $specificInputValidation = new Validation($this->name, $this->value);
-            $spacificInputRequired = $specificInputValidation->Required();
+            parent::__construct($this->name, $this->value);
+            $spacificInputRequired = $this->Required();
             if (empty($spacificInputRequired)) {
-                $specificInputValidation->Filter();
-                $spacificInputRegex = $specificInputValidation->Regex($pattern);
+                $this->Filter();
+                $spacificInputRegex = $this->Regex($pattern);
                 if (empty($spacificInputRegex)) {
-                    $spacificInputUnique = $specificInputValidation->Unique($table);
+                    $spacificInputUnique = $this->Unique($table);
                     if (empty($spacificInputUnique)) {
-                        $_SESSION["values"]["$this->name"] = $this->value;
+                        $_SESSION["values"]["register"]["$this->name"] = $this->value;
                     } else {
-                        $_SESSION["errors"]["$this->name"]["unique"] = $spacificInputUnique;
+                        $_SESSION["errors"]["register"]["$this->name"]["unique"] = $spacificInputUnique;
                     }
                 } else {
-                    $_SESSION["errors"]["$this->name"]["regex"] = $spacificInputRegex;
+                    $_SESSION["errors"]["register"]["$this->name"]["regex"] = $spacificInputRegex;
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"] = $spacificInputRequired;
+                $_SESSION["errors"]["register"]["$this->name"]["required"] = $spacificInputRequired;
             }
         }
         //validation method for password 
         public function PasswordValidation($pattern)
         {
-            $passwordValidation = new Validation($this->name, $this->value);
-            $passwordRequired = $passwordValidation->Required();
+            parent::__construct($this->name, $this->value);
+            $passwordRequired = $this->Required();
             if (empty($passwordRequired)) {
-                $passwordValidation->Filter();
+                $this->Filter();
                 if (strlen($this->value) > 6 && strlen($this->value) < 13) {
-                    $passwordRegex = $passwordValidation->Regex($pattern);
+                    $passwordRegex = $this->Regex($pattern);
                     if (empty($passwordRegex)) {
-                        $_SESSION["values"]["$this->name"] = $this->value;
+                        $_SESSION["values"]["register"]["$this->name"] = $this->value;
                     } else {
-                        $_SESSION["errors"]["$this->name"]["regex"] = $passwordRegex;
+                        $_SESSION["errors"]["register"]["$this->name"]["regex"] = $passwordRegex;
                     }
                 } else {
-                    $_SESSION["errors"]["$this->name"]["length"] = "password length 6-13";
+                    $_SESSION["errors"]["register"]["$this->name"]["length"] = "password length 6-13";
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"] = $passwordRequired;
+                $_SESSION["errors"]["register"]["$this->name"]["required"] = $passwordRequired;
             }
         }
         //validation method for Confirm Password 
         public function ConfirmPasswordValidation($confirmPassword)
         {
-            $confirmPasswordValidation = new Validation($this->name, $this->value);
-            $confirmPasswordRequired = $confirmPasswordValidation->Required();
+            parent::__construct($this->name, $this->value);
+            $confirmPasswordRequired = $this->Required();
             if (empty($confirmPasswordRequired)) {
-                $confirmPasswordValidation->Filter();
-                $confirmPasswordConfirmed = $confirmPasswordValidation->Confirmed($confirmPassword);
-                if (empty($confirmPasswordConfirmed)) {
-                    $_SESSION["values"]["$this->name"] = $this->value;
+                $this->Filter();
+                $confirmPasswordConfirmed = $this->Confirmed($confirmPassword);
+                if (empty($confirmPasswordConfirmed) && !isset($_SESSION["errors"]["register"]["password"])) { //!isset($_SESSION["errors"]["password"] -> Becouse save password and confirmPassword when not found error in password 
+                    $_SESSION["values"]["register"]["$this->name"] = $this->value;
                 } else {
-                    $_SESSION["errors"]["$this->name"]["confirm"] = $confirmPasswordConfirmed;
+                    $_SESSION["errors"]["register"]["$this->name"]["confirm"] = $confirmPasswordConfirmed;
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"] = $confirmPasswordRequired;
+                $_SESSION["errors"]["register"]["$this->name"]["required"] = $confirmPasswordRequired;
             }
         }
         //validation method for date
-        public function DateValidation($pattern)
+        public function DateValidation($pattern, $minAge, $maxAge)
         {
-            $dateValidation = new Validation($this->name, $this->value);
-            $dateRequired = $dateValidation->Required();
+            parent::__construct($this->name, $this->value);
+            $dateRequired = $this->Required();
             if (empty($dateRequired)) {
-                $dateValidation->Filter();
-                $dateRegex = $dateValidation->Regex($pattern);
+                $this->Filter();
+                $dateRegex = $this->Regex($pattern);
                 if (empty($dateRegex)) {
-                    $_SESSION["values"]["$this->name"] = $this->value;
+                    $datelengthAge = $this->LengthAge($minAge, $maxAge);
+                    if (empty($datelengthAge)) {
+                        $_SESSION["values"]["register"]["$this->name"] = $this->value;
+                    } else {
+                        $_SESSION["errors"]["register"]["$this->name"]["lenghtAge"] = $datelengthAge;
+                    }
                 } else {
-                    $_SESSION["errors"]["$this->name"]["regex"] = $dateRegex;
+                    $_SESSION["errors"]["register"]["$this->name"]["regex"] = $dateRegex;
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"] = $dateRequired;
+                $_SESSION["errors"]["register"]["$this->name"]["required"] = $dateRequired;
             }
         }
         //validation method for gender
         public function GenderValidation($pattern)
         {
-            $genderValidation = new Validation($this->name, $this->value);
-            $genderRequired = $genderValidation->Required();
+            parent::__construct($this->name, $this->value);
+            $genderRequired = $this->Required();
             if (empty($genderRequired)) {
-                $genderRegex = $genderValidation->Regex($pattern);
+                $genderRegex = $this->Regex($pattern);
                 if (empty($genderRegex)) {
-                    $_SESSION["values"]["$this->name"] = $this->value;
+                    $_SESSION["values"]["register"]["$this->name"] = $this->value;
                 } else {
-                    $_SESSION["errors"]["$this->name"]["regex"] = $genderRegex;
+                    $_SESSION["errors"]["register"]["$this->name"]["regex"] = $genderRegex;
                 }
             } else {
-                $_SESSION["errors"]["$this->name"]["required"] = $genderRequired;
+                $_SESSION["errors"]["register"]["$this->name"]["required"] = $genderRequired;
             }
         }
     }
@@ -175,15 +182,55 @@ if (isset($_POST["submit"])) {
     //object for Validation DateValidation method
     $dateObject = new RegisterRequest("date_of_birth", $_POST["date_of_birth"]);
     $patternDate = "/^\d{4}-\d{2}-\d{2}$/";
-    $dateObject->DateValidation($patternDate);
+    $minAge = 10;
+    $maxAge = 100;
+    $dateObject->DateValidation($patternDate, $minAge, $maxAge);
 
     //object for Validation GenderValidation method
     $genderObject = new RegisterRequest("gender", $_POST["gender"]);
     $patternGender = "/^[m|f]$/";
     $genderObject->GenderValidation($patternGender);
 }
-if (empty($_SESSION["errors"])) {
-    var_dump($_POST);
+if (empty($_SESSION["errors"]["register"])) {
+    $userObject = new User;
+    $userObject->setUser_name($_POST["user_name"]);
+    $userObject->setPassword($_POST["password"]);
+    $userObject->setFirst_name($_POST["first_name"]);
+    $userObject->setLast_name($_POST["last_name"]);
+    $userObject->setEmail($_POST["email"]);
+    $userObject->setGender($_POST["gender"]);
+    $userObject->setDate_of_birth($_POST["date_of_birth"]);
+    $code = rand(10000, 99999);
+    $userObject->setCode_email_verified($code);
+    $result = $userObject->create();
+    if ($result) {
+            //load phpmailer write in cmd project -> composer require phpmailer/phpmailer
+            $subject = "verification code";
+            $body = "
+        <div style='text-align:center;'>
+            <h1 style='font-weight:bold;margin-bottom:8px;'>Hello {$_POST["first_name"]} {$_POST["last_name"]}</h1>
+            <p style='font-size:16px;'>Thank you for signing up!</p>
+            <p style='font-size:16px;'>Your verification code is: <b style='color:blue;'>$code</b></p>
+            <p style='font-size:16px;'>Please use this code to complete your registration process.</p>
+            <p style='font-size:16px;'>If you have any questions or need further assistance, feel free to contact us.</p>
+            <br>
+            <p style='font-size:16px;'>Best regards,</p>
+            <p style='font-size:16px;'>[Ecommerce Clothes]</p>
+        </div>";
+            $mail = new Mail($_POST["email"], $subject, $body);
+            $mailResult = $mail->send();
+            if ($mailResult) {
+                header("location:../../verification-code.php?user_name=".$_POST['user_name']);
+                die();
+            } else {
+                header("location:../../404.php");
+                die();
+            }
+    } else {
+        header("location:../../index.php");
+        die();
+    }
 } else {
     header("location:../../register.php");
+    die();
 }

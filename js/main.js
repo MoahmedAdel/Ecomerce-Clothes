@@ -239,12 +239,12 @@ for (var i = 0; i < passwordIcon.length; ++i) {
 */
 function showRecoverPasswordForm() {
     document.getElementById('recover_password').style.display = 'block';
-    document.getElementById('customer_login').style.display = 'none';
+    document.getElementById('login').style.display = 'none';
 }
 
 function hideRecoverPasswordForm() {
     document.getElementById('recover_password').style.display = 'none';
-    document.getElementById('customer_login').style.display = 'block';
+    document.getElementById('login').style.display = 'block';
 }
 
 // Allow deep linking to the recover password form
@@ -272,4 +272,30 @@ Array.from(smallImgs).forEach(function (ele) {
     };
 });
 
+/*------------------
+    verification code 
+--------------------*/
+const inputs = ["input1", "input2", "input3", "input4", "input5"];
 
+    inputs.map((id) => {
+        const input = document.getElementById(id);
+        addListener(input);
+    });
+
+    function addListener(input) {
+        input.addEventListener("keyup", () => {
+            const code = parseInt(input.value);
+            if (code >= 0 && code <= 9) {
+                const n = input.nextElementSibling;
+                if (n) n.focus();
+            } else {
+                input.value = "";
+            }
+
+            const key = event.key; // const {key} = event; ES6+
+            if (key === "Backspace" || key === "Delete") {
+                const prev = input.previousElementSibling;
+                if (prev) prev.focus();
+            }
+        });
+    }
