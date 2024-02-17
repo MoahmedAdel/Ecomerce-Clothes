@@ -21,7 +21,7 @@ include_once "layouts/Breadcrumb.php";
                 <div class="col p-5 w-100 ">
                     <h3 class="fw-bolder font-weight-bold text-center">WELCOME BACK !</h3>
                     <!-- form login section -->
-                    <form action="" class="mt-5" id="login">
+                    <form action="app/requests/loginRequest.php" method="post" class="mt-5" id="login">
                         <div class="mb-3">
                             <label for="username" class="form-label font-weight-bold">Email or Username</label>
                             <input type="email" name="email_or_username"
@@ -34,7 +34,7 @@ include_once "layouts/Breadcrumb.php";
                         <div class="mb-1">
                             <label for="username" class="form-label font-weight-bold">Password</label>
                             <div class="d-flex position-relative">
-                                <input type="password" name="Password"
+                                <input type="password" name="password"
                                     class="form-control text-indent auth__password shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3"
                                     tabindex="2">
                                 <span class="password__icon text-primary fs-6 fw-bold bi bi-eye-slash"></span>
@@ -44,16 +44,16 @@ include_once "layouts/Breadcrumb.php";
                             </div>
                         </div>
                         <div class="text-center mb-2">
-                            <input type="radio" name="type_of_user" id="admin" class="">
+                            <input type="radio" name="type" id="admin" value="admin" class="">
                             <label for="admin" class="fw-bold mr-3">Admin</label>
-                            <input type="radio" name="type_of_user" id="staff" class="">
+                            <input type="radio" name="type" id="staff" value="staff" class="">
                             <label for="staff" class="fw-bold mr-3">Staff</label>
-                            <input type="radio" name="type_of_user" id="user" class="">
+                            <input type="radio" name="type" id="user" value="user" class="">
                             <label for="user" class="fw-bold">User</label>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-outline-dark btn-lg rounded-pill w-100"
-                                tabindex="3">Login</button>
+                            <input type="submit" name="submit" value="submit" class="btn btn-outline-dark btn-lg rounded-pill w-100"
+                                tabindex="3">Login</input>
                         </div>
                         <p class="text-center font-weight-bold"><a href="#"
                                 onclick="showRecoverPasswordForm();return false;">Forgot your
@@ -93,3 +93,4 @@ include_once "layouts/Breadcrumb.php";
 <?php
 include_once "layouts/footer.php";
 include_once "layouts/footer-script.php";
+unset($_SESSION["errors"]["login"]);

@@ -50,6 +50,14 @@ class User extends config implements operations
         $query = "UPDATE `users` SET `status` = $status WHERE `user_name` = '$this->user_name'";
         return $this->runDML($query);
     }
+    public function loginEmail(){
+        $query = "SELECT * FROM `users` WHERE `email` = '$this->email' AND `password` ='$this->password'";
+        return $this->runDQL($query);
+    }
+    public function loginUserName(){
+        $query = "SELECT * FROM `users` WHERE `user_name` = '$this->user_name' AND `password` ='$this->password'";
+        return $this->runDQL($query);
+    }
     /**
      * Get the value of id
      */
