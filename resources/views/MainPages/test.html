@@ -1,0 +1,58 @@
+<form method="POST" action="{{ route('admin.storeCategory') }}" id="category">
+
+    <div class="mb-3">
+        <label for="category-name" class="form-label">Category Name</label>
+        <input type="text" class="form-control category-name @error('category_name') is-invalid @enderror"
+            id="category-name" name="category_name">
+        <span class="invalid-feedback category-error" role="alert">
+            <strong class="category-error"></strong>
+        </span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    //validation inputs 
+    class Validation {
+        constructor(name, value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        // Method to check if input value is empty
+        required() {
+            return (this.value === '' ? `${this.name} is Required` : '');
+        }
+
+        // Method to validate input value with a specific pattern
+        regex(pattern) {
+            return (pattern.test(this.value) ? '' : `${this.name} is Invalid`);
+        }
+
+        // Method to check if input is a string
+        isString() {
+            return (typeof this.value === 'string' ? '' : 'Please Enter String Value');
+        }
+    }
+
+    //validate category 
+    document.getElementById("category").addEventListener("submit", function (event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Validation for category name input
+        const categoryNameInput = document.querySelector(".category-name").value;
+        const categoryError = document.querySelector(".category-error");
+        const categoryValidation = new Validation("Category Name", categoryNameInput);
+        const categoryErrorMessage = categoryValidation.required();
+        if (categoryErrorMessage) {
+            categoryError.textContent = categoryErrorMessage;
+        } else {
+            categoryError.textContent = "";
+            // If validation passes, submit the form
+            this.submit();
+        }
+
+        // You can add more validations for other fields if needed
+    });
+</script>

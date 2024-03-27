@@ -21,43 +21,7 @@ class User extends config implements operations
     private $update_at;
     private $verified_at;
     private $sub_admin_id;
-    public function create()
-    {
-        $query = "INSERT INTO users (user_name, password, first_name, last_name, email, gender, date_of_birth, code_email_verified)
-        VALUES ('$this->user_name', '$this->password', '$this->first_name', '$this->last_name', '$this->email', '$this->gender',
-        '$this->date_of_birth', '$this->code_email_verified')";
-        return $this->runDML($query);
-    }
-    public function read()
-    {
 
-    }
-    public function update()
-    {
-
-    }
-    public function delete()
-    {
-
-    }
-    public function checkCode()
-    {
-        $query = "SELECT * FROM `users` WHERE `user_name` = '$this->user_name' AND `code_email_verified` = $this->code_email_verified";
-        return $this->runDQL($query);
-    }
-    public function updateStatus($status)
-    {
-        $query = "UPDATE `users` SET `status` = $status WHERE `user_name` = '$this->user_name'";
-        return $this->runDML($query);
-    }
-    public function loginEmail(){
-        $query = "SELECT * FROM `users` WHERE `email` = '$this->email' AND `password` ='$this->password'";
-        return $this->runDQL($query);
-    }
-    public function loginUserName(){
-        $query = "SELECT * FROM `users` WHERE `user_name` = '$this->user_name' AND `password` ='$this->password'";
-        return $this->runDQL($query);
-    }
     /**
      * Get the value of id
      */
@@ -378,5 +342,69 @@ class User extends config implements operations
         $this->code_email_verified = $code_email_verified;
 
         return $this;
+    }
+
+    public function create()
+    {
+        $query = "INSERT INTO users (user_name, password, first_name, last_name, email, gender, date_of_birth, code_email_verified)
+        VALUES ('$this->user_name', '$this->password', '$this->first_name', '$this->last_name', '$this->email', '$this->gender',
+        '$this->date_of_birth', '$this->code_email_verified')";
+        return $this->runDML($query);
+    }
+    public function read()
+    {
+
+    }
+    public function update()
+    {
+
+    }
+    public function delete()
+    {
+
+    }
+    public function checkCode()
+    {
+        $query = "SELECT * FROM `users` WHERE `user_name` = '$this->user_name' AND `code_email_verified` = $this->code_email_verified";
+        return $this->runDQL($query);
+    }
+    public function checkEmail()
+    {
+        $query = "SELECT * FROM `users` WHERE `email` = '$this->email'";
+        return $this->runDQL($query);
+    }
+    public function checkUserName()
+    {
+        $query = "SELECT * FROM `users` WHERE `user_name` = '$this->user_name'";
+        return $this->runDQL($query);
+    }
+    public function updateStatus()
+    {
+        $query = "UPDATE `users` SET `status` = $this->status WHERE `user_name` = '$this->user_name'";
+        return $this->runDML($query);
+    }
+    public function updateCodeVerified()
+    {
+        $query = "UPDATE `users` SET `code_email_verified` = $this->code_email_verified WHERE `email` = '$this->email'";
+        return $this->runDML($query);
+    }
+    public function updateVerifiedAt() {
+        $currentTimestamp = date("Y-m-d H:i:s");
+        $query = "UPDATE users SET verified_at = '$currentTimestamp' WHERE user_name = '$this->user_name'";
+        return $this->runDML($query);
+    }
+    public function updatePassword() {
+        $query = "UPDATE users SET password = '$this->password' WHERE user_name = '$this->user_name'";
+        return $this->runDML($query);
+    }
+    public function loginEmail()
+    {
+        $query = "SELECT * FROM `users` WHERE `email` = '$this->email' AND `password` ='$this->password'";
+        return $this->runDQL($query);
+    }
+    public function loginUserName()
+    {
+        $query = "SELECT * FROM `users` WHERE `user_name` = '$this->user_name' AND `password` ='$this->password'";
+        return $this->runDQL($query);
     }
 }
