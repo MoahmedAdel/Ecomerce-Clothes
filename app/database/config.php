@@ -20,6 +20,7 @@ class config
         //         echo "Connection successfully";
         //     }
     }
+
     // DML -> insert update delete 
     public function runDML(string $quary): bool
     {
@@ -31,6 +32,7 @@ class config
         return false;
         
     }
+    
     // DQL -> select
     public function runDQL(string $quary)
     {

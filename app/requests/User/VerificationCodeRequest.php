@@ -15,6 +15,9 @@ if (isset($_POST["submit"])) {
     } else {
         $_SESSION["errors"]["verificationCode"]["required"] = "code is required";
     }
+} else {
+    header("location:../../../resources/views/MainPages/404.php");
+    die();
 }
 
 if (!isset($_SESSION["errors"]["verificationCode"])) {

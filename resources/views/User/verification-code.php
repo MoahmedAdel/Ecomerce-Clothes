@@ -1,6 +1,6 @@
 <?php
 $title = "Verification Code ";
-include_once "../Layouts/header.php";
+include_once "../Layouts/user/header.php";
 ?>
 <style>
 
@@ -33,5 +33,5 @@ include_once "../Layouts/header.php";
     </section>
 </div>
 <?php
-include_once "../Layouts/footer-script.php";
+include_once "../Layouts/user/footer-script.php";
 unset($_SESSION["errors"]);

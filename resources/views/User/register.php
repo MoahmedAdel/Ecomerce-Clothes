@@ -1,16 +1,9 @@
 <?php
 $title = "Register";
 $links = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">';
-include_once "../Layouts/header.php";
-include_once "../Layouts/nav.php";
-?>
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<?php
-include_once "../Layouts/Breadcrumb.php";
+include_once "../Layouts/user/header.php";
+include_once "../Layouts/user/nav.php";
+include_once "../Layouts/user/Breadcrumb.php";
 ?>
 
 <!-- Register Section -->
@@ -191,7 +184,7 @@ include_once "../Layouts/Breadcrumb.php";
     </div>
 </div>
 <?php
-include_once "../Layouts/footer.php";
-include_once "../Layouts/footer-script.php";
+include_once "../Layouts/user/footer.php";
+include_once "../Layouts/user/footer-script.php";
 unset($_SESSION["errors"]["register"]);
 unset($_SESSION["values"]["register"]);

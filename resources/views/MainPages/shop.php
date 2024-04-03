@@ -1,16 +1,8 @@
 <?php
 $title = "Shop";
-include_once "../Layouts/header.php";
-include_once "../Layouts/nav.php";
-?>
-
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<?php
-include_once "../Layouts/Breadcrumb.php";
+include_once "../Layouts/user/header.php";
+include_once "../Layouts/user/nav.php";
+include_once "../Layouts/user/Breadcrumb.php";
 ?>
 
 <!-- Shop Section Begin -->

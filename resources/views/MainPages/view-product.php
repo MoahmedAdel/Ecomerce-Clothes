@@ -1,16 +1,9 @@
 <?php
 $title = "Product";
 $links = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">';
-include_once "layouts/header.php";
-include_once "layouts/nav.php";
-?>
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<?php
-include_once "layouts/Breadcrumb.php";
+include_once "layouts/user/header.php";
+include_once "layouts/user/nav.php";
+include_once "layouts/user/Breadcrumb.php";
 ?>
 
 <div class="product container mt-5">
@@ -129,5 +122,5 @@ include_once "layouts/Breadcrumb.php";
     </div>
 </div>
 <?php
-include_once "layouts/footer.php";
-include_once "layouts/footer-script.php";
+include_once "layouts/user/footer.php";
+include_once "layouts/user/footer-script.php";

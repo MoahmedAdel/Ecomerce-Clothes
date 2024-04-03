@@ -1,7 +1,6 @@
 <?php
 $title = "404";
 include_once "../layouts/header.php";
-include_once "../layouts/nav.php";
 ?>
 
 <section class="page_404">

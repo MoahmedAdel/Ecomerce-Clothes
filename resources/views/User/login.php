@@ -1,16 +1,8 @@
 <?php
 $title = "Login";
-include_once "../Layouts/header.php";
-include_once "../Layouts/nav.php";
-?>
-
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<?php
-include_once "../Layouts/Breadcrumb.php";
+include_once "../Layouts/user/header.php";
+include_once "../Layouts/user/nav.php";
+include_once "../Layouts/user/Breadcrumb.php";
 ?>
 
 <!-- Login Section -->
@@ -111,8 +103,8 @@ include_once "../Layouts/Breadcrumb.php";
     </div>
 </div>
 <?php
-include_once "../Layouts/footer.php";
-include_once "../Layouts/footer-script.php";
+include_once "../Layouts/user/footer.php";
+include_once "../Layouts/user/footer-script.php";
 unset($_SESSION["errors"]["login"]);
 unset($_SESSION["errors"]["resetPassword"]["email"]);
 unset($_SESSION["values"]["login"]);

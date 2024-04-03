@@ -149,14 +149,12 @@ if ($_POST["submit"]) {
         }
     }
 } else {
-    header("location:../../../resources/views/User/login.php");
+    header("location:../../../resources/views/MainPages/404.php");
     die();
 }
 if (empty($_SESSION["errors"]["login"]) && isset($_SESSION["user"])) {
-    if ($_SESSION["user"]->status == 1) {
-        header("location:../../../resources/views/MainPages/index.php");
-        die();
-    }
+    header("location:../../../resources/views/MainPages/index.php");
+    die();
 } else {
     header("location:../../../resources/views/User/login.php");
     die();

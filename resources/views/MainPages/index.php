@@ -1,15 +1,8 @@
 <?php
 $title = "Home";
-include_once "../Layouts/header.php";
-include_once "../Layouts/nav.php";
+include_once "../Layouts/user/header.php";
+include_once "../Layouts/user/nav.php";
 ?>
-
-<body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
 
     <!-- Hero Section Begin -->
     <section class="hero">
@@ -528,5 +521,5 @@ include_once "../Layouts/nav.php";
     </div>
     <!-- Search End -->
     <?php 
-    include_once "../Layouts/footer.php";
-    include_once "../Layouts/footer-script.php";
+    include_once "../Layouts/user/footer.php";
+    include_once "../Layouts/user/footer-script.php";

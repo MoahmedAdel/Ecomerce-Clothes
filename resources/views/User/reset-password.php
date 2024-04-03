@@ -1,17 +1,10 @@
 <?php
 $title = "Reset Password";
-include_once "../Layouts/header.php";
-include_once "../Layouts/nav.php";
+include_once "../Layouts/user/header.php";
+include_once "../Layouts/user/nav.php";
+include_once "../Layouts/user/Breadcrumb.php";
 ?>
 
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<?php
-include_once "../Layouts/Breadcrumb.php";
-?>
 <!-- Login Section -->
 <div class="container">
     <div class="row align-self-center justify-content-center">

@@ -5,23 +5,23 @@ include_once __DIR__ . "\..\database\operations.php";
 
 class Admin extends config implements operations
 {
-    private $id ;
+    private $id;
     private $user_name;
-    private $password ;
-    private $first_name ;
-    private $last_name ;
-    private $email ;
-    private $phone ;
-    private $image ;
+    private $password;
+    private $first_name;
+    private $last_name;
+    private $email;
+    private $phone;
+    private $image;
     private $gender;
-    private $role ;
-    private $status ;
-    private $create_at ;
-    private $update_at ;
+    private $role;
+    private $status;
+    private $create_at;
+    private $update_at;
 
     /**
      * Get the value of user_name
-     */ 
+     */
     public function getUser_name()
     {
         return $this->user_name;
@@ -31,17 +31,17 @@ class Admin extends config implements operations
      * Set the value of user_name
      *
      * @return  self
-     */ 
+     */
     public function setUser_name($user_name)
     {
-        $this->user_name = $$user_name;
+        $this->user_name = $user_name;
 
         return $this;
     }
 
     /**
      * Get the value of password
-     */ 
+     */
     public function getPassword()
     {
         return $this->password;
@@ -51,7 +51,7 @@ class Admin extends config implements operations
      * Set the value of password
      *
      * @return  self
-     */ 
+     */
     public function setPassword($password)
     {
         $this->password = sha1($password);
@@ -61,7 +61,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of first_name
-     */ 
+     */
     public function getFirst_name()
     {
         return $this->first_name;
@@ -71,7 +71,7 @@ class Admin extends config implements operations
      * Set the value of first_name
      *
      * @return  self
-     */ 
+     */
     public function setFirst_name($first_name)
     {
         $this->first_name = $first_name;
@@ -81,7 +81,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of last_name
-     */ 
+     */
     public function getLast_name()
     {
         return $this->last_name;
@@ -91,7 +91,7 @@ class Admin extends config implements operations
      * Set the value of last_name
      *
      * @return  self
-     */ 
+     */
     public function setLast_name($last_name)
     {
         $this->last_name = $last_name;
@@ -101,7 +101,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of email
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -111,7 +111,7 @@ class Admin extends config implements operations
      * Set the value of email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -121,7 +121,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of phone
-     */ 
+     */
     public function getPhone()
     {
         return $this->phone;
@@ -131,7 +131,7 @@ class Admin extends config implements operations
      * Set the value of phone
      *
      * @return  self
-     */ 
+     */
     public function setPhone($phone)
     {
         $this->phone = $phone;
@@ -141,7 +141,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of image
-     */ 
+     */
     public function getImage()
     {
         return $this->image;
@@ -151,7 +151,7 @@ class Admin extends config implements operations
      * Set the value of image
      *
      * @return  self
-     */ 
+     */
     public function setImage($image)
     {
         $this->image = $image;
@@ -161,7 +161,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of gender
-     */ 
+     */
     public function getGender()
     {
         return $this->gender;
@@ -171,7 +171,7 @@ class Admin extends config implements operations
      * Set the value of gender
      *
      * @return  self
-     */ 
+     */
     public function setGender($gender)
     {
         $this->gender = $gender;
@@ -181,7 +181,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of role
-     */ 
+     */
     public function getRole()
     {
         return $this->role;
@@ -191,7 +191,7 @@ class Admin extends config implements operations
      * Set the value of role
      *
      * @return  self
-     */ 
+     */
     public function setRole($role)
     {
         $this->role = $role;
@@ -201,7 +201,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of status
-     */ 
+     */
     public function getStatus()
     {
         return $this->status;
@@ -211,7 +211,7 @@ class Admin extends config implements operations
      * Set the value of status
      *
      * @return  self
-     */ 
+     */
     public function setStatus($status)
     {
         $this->status = $status;
@@ -221,7 +221,7 @@ class Admin extends config implements operations
 
     /**
      * Get the value of update_at
-     */ 
+     */
     public function getUpdate_at()
     {
         return $this->update_at;
@@ -231,7 +231,7 @@ class Admin extends config implements operations
      * Set the value of update_at
      *
      * @return  self
-     */ 
+     */
     public function setUpdate_at($update_at)
     {
         $this->update_at = $update_at;
@@ -239,9 +239,32 @@ class Admin extends config implements operations
         return $this;
     }
 
-    
-    public function create(){}
-    public function update(){}
-    public function delete(){}
-    public function read(){}
+
+    public function create()
+    {
+        $query = "INSERT INTO admins (user_name, password, first_name, last_name, email, phone , gender,role ,status)
+        VALUES ('$this->user_name', '$this->password', '$this->first_name', '$this->last_name', '$this->email', '$this->phone',
+        '$this->gender' ,'$this->role','$this->status')";
+        return $this->runDML($query);
+    }
+    public function update()
+    {
+    }
+    public function delete()
+    {
+    }
+    public function read()
+    {
+    }
+
+    public function loginEmail()
+    {
+        $query = "SELECT * FROM `admins` WHERE `email` = '$this->email' AND `password` ='$this->password'";
+        return $this->runDQL($query);
+    }
+    public function loginUserName()
+    {
+        $query = "SELECT * FROM `admins` WHERE `user_name` = '$this->user_name' AND `password` ='$this->password'";
+        return $this->runDQL($query);
+    }
 }

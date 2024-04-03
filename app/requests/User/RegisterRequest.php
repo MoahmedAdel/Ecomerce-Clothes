@@ -143,7 +143,7 @@ if (isset($_POST["submit"])) {
     //object for Validation UserNamrValidation method
     $userNameObject = new RegisterRequest("user_name", $_POST["user_name"]);
     $patternUserName = "/^[a-zA-Z][a-zA-Z0-9_]{2,15}/";
-    $userNameObject->SpecificInputValidation($patternUserName,$table);
+    $userNameObject->SpecificInputValidation($patternUserName, $table);
 
     //object for Validation SpecificInputValidation method (email)
     $emailObject = new RegisterRequest("email", $_POST["email"]);
@@ -170,20 +170,20 @@ if (isset($_POST["submit"])) {
     $genderObject = new RegisterRequest("gender", $_POST["gender"]);
     $patternGender = "/^[m|f]$/";
     $genderObject->GenderValidation($patternGender);
-}
-if (empty($_SESSION["errors"]["register"])) {
-    $userObject = new User;
-    $userObject->setUser_name($_POST["user_name"]);
-    $userObject->setPassword($_POST["password"]);
-    $userObject->setFirst_name($_POST["first_name"]);
-    $userObject->setLast_name($_POST["last_name"]);
-    $userObject->setEmail($_POST["email"]);
-    $userObject->setGender($_POST["gender"]);
-    $userObject->setDate_of_birth($_POST["date_of_birth"]);
-    $code = rand(10000, 99999);
-    $userObject->setCode_email_verified($code);
-    $result = $userObject->create();
-    if ($result) {
+
+    if (empty($_SESSION["errors"]["register"])) {
+        $userObject = new User;
+        $userObject->setUser_name($_POST["user_name"]);
+        $userObject->setPassword($_POST["password"]);
+        $userObject->setFirst_name($_POST["first_name"]);
+        $userObject->setLast_name($_POST["last_name"]);
+        $userObject->setEmail($_POST["email"]);
+        $userObject->setGender($_POST["gender"]);
+        $userObject->setDate_of_birth($_POST["date_of_birth"]);
+        $code = rand(10000, 99999);
+        $userObject->setCode_email_verified($code);
+        $result = $userObject->create();
+        if ($result) {
             //load phpmailer write in cmd project -> composer require phpmailer/phpmailer
             $subject = "verification code";
             $body = "
@@ -200,17 +200,21 @@ if (empty($_SESSION["errors"]["register"])) {
             $mail = new Mail($_POST["email"], $subject, $body);
             $mailResult = $mail->send();
             if ($mailResult) {
-                header("location:../../../resources/views/User/verification-code.php?user_name=".$_POST['user_name']);
+                header("location:../../../resources/views/User/verification-code.php?user_name=" . $_POST['user_name']);
                 die();
             } else {
                 header("location:../../../resources/views/MainPages/404.php");
                 die();
             }
+        } else {
+            header("location:../../../resources/views/User/register.php");
+            die();
+        }
     } else {
         header("location:../../../resources/views/User/register.php");
         die();
     }
 } else {
-    header("location:../../../resources/views/User/register.php");
+    header("location:../../../resources/views/MainPages/404.php");
     die();
 }
