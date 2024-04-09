@@ -658,5 +658,5 @@ include_once "../Layouts/user/Breadcrumb.php";
 </div>
 <!-- Search End -->
 <?php
-include_once "../Layouts/footer.php";
-include_once "../Layouts/footer-script.php";
+include_once "../Layouts/user/footer.php";
+include_once "../Layouts/user/footer-script.php";

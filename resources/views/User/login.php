@@ -1,6 +1,7 @@
 <?php
 $title = "Login";
 include_once "../Layouts/user/header.php";
+include_once "../../../app/middleware/user/guest.php";
 include_once "../Layouts/user/nav.php";
 include_once "../Layouts/user/Breadcrumb.php";
 ?>

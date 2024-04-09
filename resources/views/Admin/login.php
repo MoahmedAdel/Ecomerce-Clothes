@@ -1,17 +1,18 @@
 <?php
 $title = "Login Admin";
 include_once "../Layouts/user/header.php";
+include_once "../../../app/middleware/admin/guest.php";
 include_once "../Layouts/user/nav.php";
 include_once "../Layouts/user/Breadcrumb.php";
 ?>
 
 <!-- Login Section -->
 <div class="container">
-    <div class="row align-self-center justify-content-center">  
+    <div class="row align-self-center justify-content-center">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6 px-5 ">
             <div class="row">
                 <div class="col p-5 w-100 ">
-                    <h3 class="fw-bolder font-weight-bold text-center">WELCOME Admin !</h3>
+                    <h3 class="fw-bolder font-weight-bold text-center">WELCOME ADMIN !</h3>
                     <!-- form login section -->
                     <form action="../../../app/requests/Admin/LoginRequest.php" method="post" class="mt-5" id="login">
                         <div class="">
@@ -55,6 +56,10 @@ include_once "../Layouts/user/Breadcrumb.php";
                                     }
                                     ?>
                                 </p>
+                            </div>
+                            <div class="mt-2 ms-4">
+                                <input type="checkbox" name="remember_me" id="remember_me" class="form-check-input me-1 mb-2">
+                                <label for="remember_me" class="ms-2 mb-0">Remember Me !</label>
                             </div>
                         </div>
                         <div class="text-center mt-3 col-5 p-0">

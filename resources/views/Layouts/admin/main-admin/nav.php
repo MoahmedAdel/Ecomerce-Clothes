@@ -91,7 +91,7 @@
                     class="w-7 w-7 rounded-full" alt="Profile">
                 <h1>Habib Mhamadi</h1>
             </div>
-            <a onclick="event.preventDefault(); document.getElementById('logoutForm').submit()" href="#"
+            <a href="../../../../../app/requests/Logout.php"
                 class="hover:bg-gray-800 hover:text-white p-2 rounded">
                 <form id="logoutForm" action="" method="POST"></form>
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"

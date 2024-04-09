@@ -37,7 +37,7 @@ if ($_POST["submit"]) {
 
     //object from admin
     $adminObject = new Admin();
-    
+
     // if admin will be login with -> Email
     if (empty($emailRegex)) {
         $adminObject->setEmail($_POST['email_or_username']);
@@ -49,10 +49,14 @@ if ($_POST["submit"]) {
 
             //check if admin is blocked(0) or no(1)
             if ($admin->status == 1) {
-                // check if admin is "super admin = 1" or "sub admin = 2"
+                // check if admin is "main admin = 1" or "sub admin = 2"
                 if ($admin->role == 1) {
-                    $_SESSION["suber-admin"] = $admin;
-                    //header to dashboard super admin 
+                    if(isset($_POST["remember_me"])){
+                        setcookie('remember_me_main-admin',$_POST["email_or_username"],time() + (24*60*60)*30*12,"/");
+                    }
+                    $_SESSION["main-admin"] = $admin;
+                    header("location:../../../resources/views/Admin/main-admin/dashboard.php");
+                    die();
                 } else if ($admin->role == 2) {
                     $_SESSION["sub-admin"] = $admin;
                     //header to dashboadrd sub admin 
@@ -63,7 +67,7 @@ if ($_POST["submit"]) {
         } else {
             $_SESSION["errors"]["login-admin"]['status-login']["invaliad"] = "Invalid Email or Password";
         }
-    } 
+    }
 
     // if admin will be login with -> User Name
     else if (empty($userNameRegex)) {
@@ -76,11 +80,12 @@ if ($_POST["submit"]) {
 
             //check if admin is blocked(0) or no(1)
             if ($admin->status == 1) {
-                // check if admin is "super admin = 1" or "sub admin = 2"
+                // check if admin is "main admin = 1" or "sub admin = 2"
                 if ($admin->role == 1) {
-                    $_SESSION["suber-admin"] = $admin;
-                    header('location:../../../resources/views/Admin/super-admin/dashboard.php');
+                    $_SESSION["main-admin"] = $admin;
+                    header("location:../../../resources/views/Admin/main-admin/dashboard.php");
                     die();
+                    ///////// '_'
                 } else if ($admin->role == 2) {
                     $_SESSION["sub-admin"] = $admin;
                     //header to dashboadrd sub admin 
@@ -91,8 +96,7 @@ if ($_POST["submit"]) {
         } else {
             $_SESSION["errors"]["login-admin"]['status-login']["invaliad"] = "Invalid User name or Password";
         }
-    }
-    else{
+    } else {
 
     }
     //check if validation is done or no 

@@ -1,6 +1,7 @@
 <?php
 include_once "../../Layouts/admin/header.php";
-include_once "../../Layouts/admin/super-admin/nav.php";
+include_once "../../../../app/middleware/admin/main-admin/auth.php";
+include_once "../../Layouts/admin/main-admin/nav.php";
 
 ?>
 

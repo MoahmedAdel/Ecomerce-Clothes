@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+// get cookie from browser
+if (isset($_COOKIE["remember_me_main-admin"])) {
+    include_once "../../../../app/models/Admin.php";
+    $mainAdminObject = new Admin();
+    $mainAdminObject->setEmail($_COOKIE["remember_me_main-admin"]);
+    $result = $mainAdminObject->GetAdminByEmail();
+    $admin = $result->fetch_object();
+    $_SESSION["main-admin"] = $admin;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +22,7 @@
     <!-- TAILWIND CSS -->
     <link href="../../../../resources/assets/css/tailwind.css" rel="stylesheet">
     <!-- ALPINE JS -->
-    
+
     <title>Better Code</title>
 </head>
 
