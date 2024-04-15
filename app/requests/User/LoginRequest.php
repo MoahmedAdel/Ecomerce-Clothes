@@ -153,6 +153,13 @@ if ($_POST["submit"]) {
     die();
 }
 if (empty($_SESSION["errors"]["login"]) && isset($_SESSION["user"])) {
+    if (isset($_POST["remember-me"])) {
+        if (empty($EmailRegex)) {
+            setcookie('remember-me-user-e', $_POST["email_or_username"], time() + (24 * 60 * 60) * 30, "/");
+        } else {
+            setcookie('remember-me-user-u', $_POST["email_or_username"], time() + (24 * 60 * 60) * 30, "/");
+        }
+    }
     header("location:../../../resources/views/MainPages/index.php");
     die();
 } else {

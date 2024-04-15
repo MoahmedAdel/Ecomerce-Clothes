@@ -273,4 +273,10 @@ class Admin extends config implements operations
         $query = "SELECT * FROM `admins` WHERE `email` = '$this->email'";
         return $this->runDQL($query);
     }
+
+    public function GetAdminByUserName()
+    {
+        $query = "SELECT * FROM `admins` WHERE `user_name` = '$this->user_name'";
+        return $this->runDQL($query);
+    }
 }

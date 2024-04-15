@@ -1,0 +1,26 @@
+:root {
+    --color-primary: white;
+    --colot-icon-nav: #9ca3af;
+}
+
+
+/* start style nav */
+
+.profile-nav{
+    max-width: 120px;
+}
+
+.dot-light{
+    box-shadow: 0 0 4px 5px rgba(49, 130, 206, 0.5);
+}
+
+.svg-nav {
+    fill: var(--colot-icon-nav);
+    transition: 0.2s;
+}
+
+.item-nav:hover .svg-nav {
+    fill: var(--color-primary);
+}
+
+/* end  style nav */

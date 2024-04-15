@@ -51,8 +51,8 @@ if ($_POST["submit"]) {
             if ($admin->status == 1) {
                 // check if admin is "main admin = 1" or "sub admin = 2"
                 if ($admin->role == 1) {
-                    if(isset($_POST["remember_me"])){
-                        setcookie('remember_me_main-admin',$_POST["email_or_username"],time() + (24*60*60)*30*12,"/");
+                    if (isset($_POST["remember_me"])) {
+                        setcookie('remember-me-main-admin-e', $_POST["email_or_username"], time() + (24 * 60 * 60) * 30, "/");
                     }
                     $_SESSION["main-admin"] = $admin;
                     header("location:../../../resources/views/Admin/main-admin/dashboard.php");
@@ -82,6 +82,9 @@ if ($_POST["submit"]) {
             if ($admin->status == 1) {
                 // check if admin is "main admin = 1" or "sub admin = 2"
                 if ($admin->role == 1) {
+                    if (isset($_POST["remember_me"])) {
+                        setcookie('remember-me-main-admin-u', $_POST["email_or_username"], time() + (24 * 60 * 60) * 30, "/");
+                    }
                     $_SESSION["main-admin"] = $admin;
                     header("location:../../../resources/views/Admin/main-admin/dashboard.php");
                     die();

@@ -55,13 +55,20 @@ include_once "../Layouts/user/Breadcrumb.php";
                                 </p>
                             </div>
                         </div>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="ms-4 d-flex align-items-center">
+                                <input type="checkbox" name="remember-me" id="remember-me"
+                                    class="form-check-input me-1 mb-2">
+                                <label for="remember-me" class="ms-1 mb-0">Remember Me !</label>
+                            </div>
+                            <p class="text-center font-weight-bold m-0"><a href="#"
+                                    onclick="showRecoverPasswordForm();return false;">Forgot your
+                                    password?</a></p>
+                        </div>
                         <div class="text-center">
                             <input type="submit" name="submit" value="submit"
                                 class="btn btn-outline-dark btn-lg rounded-pill w-100" tabindex="3"></input>
                         </div>
-                        <p class="text-center font-weight-bold"><a href="#"
-                                onclick="showRecoverPasswordForm();return false;">Forgot your
-                                password?</a></p>
                         <p class="mt-3 mb-0 text-center fw-lighter fs-6">Don't have an account, <a id="signUp"
                                 role="button" href="register.php" class="text-primary font-weight-bold"
                                 tabindex="4">Sign Up</a></p>
