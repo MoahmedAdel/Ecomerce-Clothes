@@ -7,7 +7,8 @@
                 <div class="flex justify-between">
                     <a href="" class="image-profile relative w-20 h-20 rounded-full overflow-hidden">
                         <img loading="lazy" class="w-full h-full object-cover"
-                            src="<?= $_SESSION["user"]-> ?>" alt="">
+                            src="../../../assets/img/<?= $_SESSION["main-admin"]->image == "default.jpg" ? "default.jpg" : "admin/" . $_SESSION["main-admin"]->image ?>"
+                            alt="">
                     </a>
                     <div class="profile-nav ml-2 mt-1">
                         <div class="relative w-fit pr-2">
@@ -17,7 +18,7 @@
                             </p>
                         </div>
                         <p>
-                            <?= $_SESSION["main-admin"]->first_name ." ".$_SESSION["main-admin"]->last_name ?>
+                            <?= $_SESSION["main-admin"]->first_name . " " . $_SESSION["main-admin"]->last_name ?>
                         </p>
                     </div>
                 </div>
