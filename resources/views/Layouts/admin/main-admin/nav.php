@@ -1,3 +1,8 @@
+<?php
+include_once __DIR__ ."\..\header.php";
+include_once __DIR__ ."\..\..\..\..\..\app\middleware\admin\main-admin\auth.php";
+?>
+
 <nav class="absolute md:relative w-64 transform -translate-x-full md:translate-x-0 h-screen overflow-y-scroll bg-black transition-all duration-200"
     :class="{'-translate-x-full': !navOpen}">
     <div class="flex flex-col justify-between h-full">

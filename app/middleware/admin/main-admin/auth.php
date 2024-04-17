@@ -1,7 +1,9 @@
 <?php
 
 //allow authenticated main_admins and prevent guests
-if (empty($_SESSION["main-admin"])) {
-    header("location:../login.php");
+if (!isset($_SESSION["main-admin"])) {
+    echo "ass";
+    $location = $_SERVER['HTTP_HOST'] . "/resources/views/Admin/login.php";
+    header("location: http://$location");
     die();
 }

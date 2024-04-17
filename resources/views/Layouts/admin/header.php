@@ -8,7 +8,7 @@ session_start();
 
 // if COOKIE have email
 if (isset($_COOKIE["remember-me-main-admin-e"])) {
-    include_once "../../../../app/models/Admin.php";
+    include_once __DIR__ . "\..\..\..\..\app\models\Admin.php";
     $mainAdminObject = new Admin();
     $mainAdminObject->setEmail($_COOKIE["remember-me-main-admin-e"]);
     $result = $mainAdminObject->GetAdminByEmail();

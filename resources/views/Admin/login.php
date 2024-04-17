@@ -58,7 +58,8 @@ include_once "../Layouts/user/Breadcrumb.php";
                                 </p>
                             </div>
                             <div class="mt-2 ms-4">
-                                <input type="checkbox" name="remember_me" id="remember_me" class="form-check-input me-1 mb-2">
+                                <input type="checkbox" name="remember_me" id="remember_me"
+                                    class="form-check-input me-1 mb-2">
                                 <label for="remember_me" class="ms-2 mb-0">Remember Me !</label>
                             </div>
                         </div>
