@@ -1,15 +1,21 @@
 :root {
+    --main-color: #7e3af2;
+    --color-primary: white;
+    --colot-icon-nav: #9ca3af;
+}
+
+:root {
     --color-primary: white;
     --colot-icon-nav: #9ca3af;
 }
 
 /* start style nav */
 
-.profile-nav{
+.profile-nav {
     max-width: 120px;
 }
 
-.dot-light{
+.dot-light {
     box-shadow: 0 0 4px 5px rgba(49, 130, 206, 0.5);
 }
 
@@ -20,6 +26,24 @@
 
 .item-nav:hover .svg-nav {
     fill: var(--color-primary);
+}
+
+/* start style nav */
+
+.main-page::-webkit-scrollbar,
+aside::-webkit-scrollbar {
+    width: .5rem;
+    height: .5rem;
+}
+
+.main-page::-webkit-scrollbar-track,
+aside::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.main-page::-webkit-scrollbar-thumb,
+aside::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
 }
 
 /* end  style nav */

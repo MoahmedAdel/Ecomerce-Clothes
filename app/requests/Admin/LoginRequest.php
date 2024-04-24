@@ -55,7 +55,7 @@ if ($_POST["submit"]) {
                         setcookie('remember-me-main-admin-e', $_POST["email_or_username"], time() + (24 * 60 * 60) * 30, "/");
                     }
                     $_SESSION["main-admin"] = $admin;
-                    header("location:../../../resources/views/Admin/main-admin/dashboard.php");
+                    header("location:../../../resources/views/Admin/main-admin/index.php");
                     die();
                 } else if ($admin->role == 2) {
                     $_SESSION["sub-admin"] = $admin;
@@ -86,7 +86,7 @@ if ($_POST["submit"]) {
                         setcookie('remember-me-main-admin-u', $_POST["email_or_username"], time() + (24 * 60 * 60) * 30, "/");
                     }
                     $_SESSION["main-admin"] = $admin;
-                    header("location:../../../resources/views/Admin/main-admin/dashboard.php");
+                    header("location:../../../resources/views/Admin/main-admin/index.php");
                     die();
                     ///////// '_'
                 } else if ($admin->role == 2) {
